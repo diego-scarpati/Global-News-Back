@@ -1,5 +1,5 @@
 const sequelize = require("sequelize");
-const db = new sequelize("GNApp", null, null, {
+const db = new sequelize("gn", null, null, {
   dialect: "postgres",
   host: "localhost",
   logging: false,
