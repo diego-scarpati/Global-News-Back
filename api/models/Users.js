@@ -18,6 +18,17 @@ Users.init(
       type: sequelize.STRING,
       allowNull: false,
     },
+    email : {
+      type: sequelize.STRING,
+      allowNull: false,
+      validate: {
+        isEmail: true
+      }
+    },
+    password : {
+      type: sequelize.STRING,
+      allowNull: false,
+    },
     nationalId: {
       type: sequelize.BIGINT,
       allowNull: false,
@@ -50,10 +61,6 @@ Users.init(
     },
     workingHours: {
       type: sequelize.STRING,
-    },
-    available: {
-      type: sequelize.BOOLEAN,
-      defaultValue: true,
     },
     observations: {
       type: sequelize.TEXT,
