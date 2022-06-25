@@ -1,7 +1,15 @@
 const sequelize = require("sequelize");
 const db = require("../db");
+const bcrypt = require("bcrypt")
 
-class Users extends sequelize.Model {}
+class Users extends sequelize.Model {
+  encryptPassword(password,salt){
+    return bcrypt.hash(password,salt)
+  }  
+  async comparePassword(password){
+    return bcrypt.compare(password,this.password)
+  }
+}
 
 Users.init(
   {
@@ -15,6 +23,17 @@ Users.init(
       unique: true,
     },
     lastName: {
+      type: sequelize.STRING,
+      allowNull: false,
+    },
+    email : {
+      type: sequelize.STRING,
+      allowNull: false,
+      validate: {
+        isEmail: true
+      }
+    },
+    password : {
       type: sequelize.STRING,
       allowNull: false,
     },
@@ -51,15 +70,22 @@ Users.init(
     workingHours: {
       type: sequelize.STRING,
     },
-    available: {
-      type: sequelize.BOOLEAN,
-      defaultValue: true,
-    },
     observations: {
       type: sequelize.TEXT,
     },
   },
   { sequelize: db, modelName: "user" }
 );
+
+Users.beforeCreate(async (user)=>{
+  if (!user.password) return
+  try{
+      const salt = await bcrypt.genSalt(10)
+      const passwordHash = await user.encryptPassword(user.password,salt)
+      user.password = passwordHash
+  }catch(e){
+      throw new Error("ERROR PASSWORD")
+  }
+})
 
 module.exports = Users;
