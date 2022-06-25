@@ -1,12 +1,13 @@
 const User = require("../models/Users")
 
 
+
 module.exports = {
-    getAll: async() => {
+    getAll: async () => {
         try {
             const allUsers = await User.findAll()
             return allUsers
-        } catch (error){
+        } catch (error) {
             throw new Error("Error getting users")
         }
     },
@@ -16,13 +17,38 @@ module.exports = {
         return userCreated;
     },
 
-    deleteUser: async(id) =>{
-        try{
-            const userDeleted = await User.destroy({where:{id}})
+    deleteUser: async (id) => {
+        try {
+            const userDeleted = await User.destroy({ where: { employeeId: id } })
             return userDeleted
-        }catch(e){
-            next(e)
+        } catch (error) {
+            console.log(error)
+        }updatePosition
+    },
+
+    getUser: async (id) => {
+        try {
+            const userId = await User.findOne({
+                where: { employeeId: id }
+            })
+            return userId
+        } catch (error) {
+            console.log(error)
         }
-      },
+    },
+
+    updateUser: async (id, data) => {
+        try {
+            const updatedUser = await User.update(data, {
+                where: { employeeId: id },
+                returning: true,
+                plain: true,
+            })
+            return updatedUser[1]
+
+        } catch (error) {
+            console.log(error)
+        }
+    },
 
 }
