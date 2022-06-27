@@ -34,7 +34,8 @@ module.exports = {
         const userId = req.params.employeeId
         try {
             const user = await userServices.getUser(userId)
-            res.send(user)
+            if (!user) return res.status(404).json({ message: "User not found" })
+            return res.send(user)
         } catch (error) {
             next(error)
         }
@@ -44,8 +45,8 @@ module.exports = {
         const userId = req.params.employeeId
         const data = req.body
         try {
-            const updateUser = await userServices.updateUser(userId, data)
-            res.status(202).json(updateUser)
+            const updatedUser = await userServices.updateUser(userId, data)
+            res.status(202).json(updatedUser)
         } catch (error) {
             next(error)
         }
