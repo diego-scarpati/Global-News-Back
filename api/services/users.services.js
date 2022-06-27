@@ -13,8 +13,12 @@ module.exports = {
     },
 
     register: async (userData) => {
-        const userCreated = await User.create(userData);
-        return userCreated;
+        try {
+            const userCreated = await User.create(userData);
+            return userCreated;
+        } catch (error) {
+            console.log(error)
+        }
     },
 
     deleteUser: async (id) => {
@@ -23,24 +27,24 @@ module.exports = {
             return userDeleted
         } catch (error) {
             console.log(error)
-        }updatePosition
+        }
     },
 
     getUser: async (id) => {
         try {
-            const userId = await User.findOne({
+            const user = await User.findOne({
                 where: { employeeId: id }
             })
-            return userId
+            return user
         } catch (error) {
             console.log(error)
         }
     },
 
-    updateUser: async (id, data) => {
+    updateUser: async (userId, data) => {
         try {
             const updatedUser = await User.update(data, {
-                where: { employeeId: id },
+                where: { employeeId: userId },
                 returning: true,
                 plain: true,
             })

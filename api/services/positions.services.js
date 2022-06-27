@@ -29,10 +29,10 @@ module.exports = {
         }
     },
 
-    updatePosition: async (id, data) => {
+    updatePosition: async (positionId, data) => {
         try {
             const updatedPosition = await Positions.update(data, {
-                where: {positionId: id},
+                where: {id: positionId},
                 returning: true,
                 plain: true
             })
