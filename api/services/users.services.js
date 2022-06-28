@@ -53,4 +53,15 @@ module.exports = {
         }
     },
 
+    findByEmail: async (email) => {
+        try {
+            const userByEmail = await User.findOne({
+                where : { email }
+            })
+            return userByEmail
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
 }
