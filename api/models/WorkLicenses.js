@@ -13,6 +13,7 @@ WorkLicenses.init(
       type: sequelize.DATE,
       allowNull: false,
     },
+    //No puedo mandar pedidos post con una endDate mayor 1 dia del startDate
     endDate: {
       type: sequelize.DATE,
       allowNull: false,
