@@ -52,11 +52,23 @@ module.exports = {
     },
 
     getByType: async (req, res, next) => {
-        console.log("REQ.PARAMSSSSSSSSSSSSSS",req.params);
+        const type = req.body.type
         try {
-
+            const licenses = await licenseServices.getByType(type)
+            return res.send(licenses)
         } catch (error) {
             next(error)
         }
-    }
+    },
+
+    // getBydate: async (req, res, next) => {
+    //     const date = req.body.date
+    //     console.log(date);
+    //     try {
+    //         const licenses = await licenseServices.getBydate(date)
+    //         return res.send(licenses)
+    //     } catch (error) {
+    //         next(error)
+    //     }
+    // },
 }

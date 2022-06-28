@@ -49,11 +49,25 @@ module.exports = {
         }
     },
 
-    getByType: async () => {
+    getByType: async (type) => {
         try {
-
+            const licenses = await Licenses.findAll({
+                where: {type}
+            })
+            return licenses
         } catch (error) {
             console.log(error)
         }
-    }
+    },
+
+    // getBydate: async (date) => {
+    //     try {
+    //         const licenses = await Licenses.findAll({
+    //             where: {startDate: date}
+    //         })
+    //         return licenses
+    //     } catch (error) {
+    //         console.log(error)
+    //     }
+    // }
 }
