@@ -28,5 +28,18 @@ module.exports = {
         } catch (error) {
             console.log(error)
         }
+    },
+
+    updateOffice: async (officeId, data) => {
+        try {
+            const updatedOffice = await Offices.update(data, {
+                where: { id: officeId },
+                returning: true,
+                plain: true
+            })
+            return updatedOffice[1]
+        } catch (error) {
+            console.log(error)
+        }
     }
 }

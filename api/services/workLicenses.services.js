@@ -20,21 +20,38 @@ module.exports = {
     deleteLicence: async (licenceId) => {
         try {
             const licenseDeleted = await Licenses.destroy({
-                where:{ id: licenceId }
+                where: { id: licenceId }
             })
             return licenseDeleted
-        } catch(error) {
-        console.log(error)
-    }
-},
+        } catch (error) {
+            console.log(error)
+        }
+    },
     updateLicense: async (licenseId, data) => {
         try {
             const updatedLicense = await Licenses.update(data, {
-                where: {id: licenseId},
+                where: { id: licenseId },
                 returning: true,
                 plain: true,
             })
             return updatedLicense[1]
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    getLicence: async (licenseId) => {
+        try {
+            const license = await Licenses.findByPk(licenseId)
+            return license
+        } catch (error) {
+            console.log(error);
+        }
+    },
+
+    getByType: async () => {
+        try {
+
         } catch (error) {
             console.log(error)
         }

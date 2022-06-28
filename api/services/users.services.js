@@ -23,7 +23,7 @@ module.exports = {
 
     deleteUser: async (id) => {
         try {
-            const userDeleted = await User.destroy({ where: { employeeId: id } })
+            const userDeleted = await User.destroy({ where: { id } })
             return userDeleted
         } catch (error) {
             console.log(error)
@@ -32,9 +32,7 @@ module.exports = {
 
     getUser: async (id) => {
         try {
-            const user = await User.findOne({
-                where: { employeeId: id }
-            })
+            const user = await User.findByPk(id)
             return user
         } catch (error) {
             console.log(error)
@@ -44,7 +42,7 @@ module.exports = {
     updateUser: async (userId, data) => {
         try {
             const updatedUser = await User.update(data, {
-                where: { employeeId: userId },
+                where: { id: userId },
                 returning: true,
                 plain: true,
             })
