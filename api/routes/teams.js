@@ -8,7 +8,7 @@ router.get("/:teamId", teamsController.getTeam)
 
 router.post("/addTeam", teamsController.addTeam)
 
-router. delete("/:teamId", teamsController.deleteUser)
+router. delete("/:teamId", teamsController.deleteTeam)
 
 router.put("/:teamId", teamsController.updateTeam)
 

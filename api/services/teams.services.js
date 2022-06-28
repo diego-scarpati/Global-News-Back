@@ -30,7 +30,7 @@ module.exports = {
         }
     },
 
-    deleteUser: async (teamId) => {
+    deleteTeam: async (teamId) => {
         try {
             const teamDeleted = await Teams.destroy({
                 where: { id: teamId }
