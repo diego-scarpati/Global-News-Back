@@ -52,5 +52,14 @@ module.exports = {
         }
     },
 
+    findByEmail: async (req, res, next) => {
+        const email = req.body
+        try {
+            const userByEmail = await userServices.findByEmail(email)
+            res.send(userByEmail)
+        } catch (error) {
+            next(error)
+        }
 
+}
 }
