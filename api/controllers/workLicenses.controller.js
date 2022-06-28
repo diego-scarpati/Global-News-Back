@@ -4,8 +4,8 @@ module.exports = {
     getAll: async (req, res, next) => {
         try {
             const allLicences = await licenseServices.getAll()
-            if(!allLicences) return res.status(404).json({message: "Licence not found"})
-            return res.json(allLicences)
+            if (!allLicences) return res.status(404).json({ message: "Licence not found" })
+            return res.status(200).json(allLicences)
         } catch (error) {
             next(error)
         }
@@ -14,7 +14,7 @@ module.exports = {
     addLicense: async (req, res, next) => {
         try {
             const licenceCreated = await licenseServices.addLicense(req.body)
-            res.status(201).json(licenceCreated)
+            return res.status(201).json(licenceCreated)
         } catch (error) {
             next(error)
         }
@@ -24,7 +24,7 @@ module.exports = {
         const licenceId = req.params.licenseId
         try {
             await licenseServices.deleteLicence(licenceId)
-            res.json("DELETED")
+            return res.status(204).json("DELETED")
         } catch (error) {
             next(error)
         }
@@ -35,7 +35,26 @@ module.exports = {
         const data = req.body
         try {
             const updatedLicense = await licenseServices.updateLicense(licenseId, data)
-            res.status(202).json(updatedLicense)
+            return res.status(202).json(updatedLicense)
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    getLicence: async (req, res, next) => {
+        const licenseId = req.params.licenseId
+        try {
+            const license = await licenseServices.getLicence(licenseId)
+            return res.status(200).json(license)
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    getByType: async (req, res, next) => {
+        console.log("REQ.PARAMSSSSSSSSSSSSSS",req.params);
+        try {
+
         } catch (error) {
             next(error)
         }
