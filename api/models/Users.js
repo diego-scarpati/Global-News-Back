@@ -2,6 +2,7 @@ const sequelize = require("sequelize");
 const db = require("../db");
 const bcrypt = require("bcrypt")
 
+
 class Users extends sequelize.Model {
   encryptPassword(password,salt){
     return bcrypt.hash(password,salt)
@@ -53,13 +54,16 @@ Users.init(
       type: sequelize.DATEONLY,
     },
     startDate: {
-      type: sequelize.DATE,
-      //allowNull: false,
+      type: sequelize.DATEONLY,
+      
     },
     endDate: {
-      type: sequelize.DATE,
+      type: sequelize.DATEONLY,
     },
     countryOfResidence: {
+      type: sequelize.STRING,
+    },
+    city: {
       type: sequelize.STRING,
     },
     shift: {
