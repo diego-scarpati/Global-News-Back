@@ -11,10 +11,22 @@ module.exports = {
         }
     },
 
-    addLicense: async (req, res, next) => {
+    getByUser: async (req, res, next) => {
+        const userId = req.params.userId
         try {
-            const licenceCreated = await licenseServices.addLicense(req.body)
-            return res.status(201).json(licenceCreated)
+            const allLicences = await licenseServices.getByUser(userId)
+            if (!allLicences) return res.status(404).json({ message: "Licence not found" })
+            return res.status(200).json(allLicences)
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    addLicense: async (req, res, next) => {
+        const data = req.body
+        try {
+            const licenseCreated = await licenseServices.addLicense(data)
+            return res.status(201).json(licenseCreated)
         } catch (error) {
             next(error)
         }
@@ -61,14 +73,13 @@ module.exports = {
         }
     },
 
-    // getBydate: async (req, res, next) => {
-    //     const date = req.body.date
-    //     console.log(date);
-    //     try {
-    //         const licenses = await licenseServices.getBydate(date)
-    //         return res.send(licenses)
-    //     } catch (error) {
-    //         next(error)
-    //     }
-    // },
+    getBydate: async (req, res, next) => {
+        const date = req.body.date
+        try {
+            const licenses = await licenseServices.getBydate(date)
+            return res.send(licenses)
+        } catch (error) {
+            next(error)
+        }
+    },
 }

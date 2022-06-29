@@ -2,6 +2,7 @@ const express = require("express");
 const volleyball = require("volleyball");
 const cors = require("cors");
 const db = require("./db/index")
+const models = require("./models")
 
 const indexRouter = require("./routes/index");
 
