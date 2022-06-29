@@ -1,9 +1,9 @@
 const sequelize = require("sequelize");
 const db = require("../db");
 
-class WorkLicenses extends sequelize.Model {}
+class Worklicenses extends sequelize.Model {}
 
-WorkLicenses.init(
+Worklicenses.init(
   {
     type: {
       type: sequelize.STRING,
@@ -13,7 +13,6 @@ WorkLicenses.init(
       type: sequelize.DATE,
       allowNull: false,
     },
-    //No puedo mandar pedidos post con una endDate mayor 1 dia del startDate
     endDate: {
       type: sequelize.DATE,
       allowNull: false,
@@ -45,7 +44,7 @@ WorkLicenses.init(
       type: sequelize.TEXT,
     },
   },
-  { sequelize: db, modelName: "workLicense" }
+  { sequelize: db, modelName: "worklicense" }
 );
 
-module.exports = WorkLicenses;
+module.exports = Worklicenses;

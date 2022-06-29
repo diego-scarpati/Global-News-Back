@@ -41,5 +41,35 @@ module.exports = {
         } catch (error) {
             console.log(error)
         }
+    },
+
+    getByCountry: async (country) => {
+        try {
+            const offices = await Offices.findAll({
+                where: {country}
+            })
+            return offices
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    getByCity: async (city) => {
+        try {
+            const offices = await Offices.findAll({
+                where: {city}
+            })
+            return offices
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
+    search: async (search) => {
+        try {
+
+        } catch (error) {
+            console.log(error)
+        }
     }
 }
