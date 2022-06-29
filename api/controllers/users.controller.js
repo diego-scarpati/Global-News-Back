@@ -21,7 +21,7 @@ module.exports = {
     },
 
     deleteUser: async (req, res, next) => {
-        const userId = req.params.employeeId
+        const userId = req.params.id
         try {
             await userServices.deleteUser(userId)
             res.json("DELETED")
@@ -31,7 +31,7 @@ module.exports = {
     },
 
     getUser: async (req, res, next) => {
-        const userId = req.params.employeeId
+        const userId = req.params.id
         try {
             const user = await userServices.getUser(userId)
             if (!user) return res.status(404).json({ message: "User not found" })
@@ -42,7 +42,7 @@ module.exports = {
     },
 
     updateUser: async (req, res, next) => {
-        const userId = req.params.employeeId
+        const userId = req.params.id
         const data = req.body
         try {
             const updatedUser = await userServices.updateUser(userId, data)
@@ -51,6 +51,16 @@ module.exports = {
             next(error)
         }
     },
+
+    findByEmail: async (req, res, next) => {
+        const email = (req.params.email);
+        try {
+            const userByEmail = await userServices.findByEmail(email)
+            return res.send(userByEmail)
+        } catch (error) {
+            next(error)
+        }
+    }
 
 
 }
