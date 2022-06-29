@@ -3,6 +3,8 @@ const WorkLicenses = require("./WorkLicenses");
 const Positions = require("./Positions");
 const Teams = require("./Teams");
 const Offices = require("./Offices");
+const Availability = require("./Availability")
+const Presentism = require("./Presentism")
 
 Users.belongsTo(Offices, { as: "office", foreignKey: "officeId" });
 Offices.hasMany(Users, { as: "users" });
@@ -16,4 +18,10 @@ Users.hasMany(WorkLicenses, { as: "workLicenses" });
 Users.belongsTo(Positions, { as: "position", foreignKey: "positionId" });
 Positions.hasMany(Users, { as: "users" });
 
-module.exports = { Users, WorkLicenses, Positions, Teams, Offices };
+Users.belongsTo(Availability, { as: "available", foreignKey: "availableId" });
+Availability.hasMany(Users, { as: "users" });
+
+Users.belongsToMany(Presentism, { through: "users_presentism" });
+Presentism.belongsToMany(Users, { through: "users_presentism" });
+
+module.exports = { Users, WorkLicenses, Positions, Teams, Offices, Availability, Presentism };
