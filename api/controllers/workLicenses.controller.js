@@ -36,7 +36,7 @@ module.exports = {
         const licenceId = req.params.licenseId
         try {
             await licenseServices.deleteLicence(licenceId)
-            return res.status(204).json("DELETED")
+            res.status(204).json("DELETED")
         } catch (error) {
             next(error)
         }

@@ -24,7 +24,7 @@ module.exports = {
         const userId = req.params.id
         try {
             await userServices.deleteUser(userId)
-            res.json("DELETED")
+            res.status(204).json("DELETED")
         } catch (error) {
             next(error)
         }

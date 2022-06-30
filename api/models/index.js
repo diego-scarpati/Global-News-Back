@@ -9,6 +9,9 @@ const Presentism = require("./Presentism")
 Users.belongsToMany(Teams, { through: "users_teams" });
 Teams.belongsToMany(Users, { through: "users_teams" });
 
+Users.belongsToMany(Presentism, { through: "users_presentism" });
+Presentism.belongsToMany(Users, { through: "users_presentism" });
+
 Users.belongsTo(Offices);
 Offices.hasMany(Users);
 
@@ -18,11 +21,9 @@ Users.hasMany(Worklicenses);
 Users.belongsTo(Positions);
 Positions.hasMany(Users);
 
-Users.belongsTo(Availability, { as: "available", foreignKey: "availableId" });
-Availability.hasMany(Users, { as: "users" });
+Users.belongsTo(Availability);
+Availability.hasMany(Users);
 
-Users.belongsToMany(Presentism, { through: "users_presentism" });
-Presentism.belongsToMany(Users, { through: "users_presentism" });
 
 module.exports = { Users, Worklicenses, Positions, Teams, Offices, Availability, Presentism };
 

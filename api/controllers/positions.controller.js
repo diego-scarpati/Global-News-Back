@@ -24,7 +24,7 @@ module.exports = {
         const positionId = req.params.positionId
         try {
             await positionServices.deletePosition(positionId)
-            res.json("DELETED")
+            res.status(204).json("DELETED")
         } catch (error) {
             next(error)
         }

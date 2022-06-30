@@ -3,7 +3,7 @@ const User = require("../models/Users");
 module.exports = {
     getAll: async () => {
         try {
-            const allUsers = await User.findAll()
+            const allUsers = await User.findAll({order: [["id", "ASC"]]})
             return allUsers
         } catch (error) {
             throw new Error("Error getting users")
