@@ -22,7 +22,9 @@ module.exports = {
     },
 
     addLicense: async (data) => {
-        const { userId, type, startDate, endDate } = data
+        const { info } = data
+        const { type, startDate, endDate } = info.data
+        const userId = info.user.id
         try {
             const user = await Users.findByPk(userId)
             const worklicenses = await Worklicenses.create({type, startDate, endDate})
