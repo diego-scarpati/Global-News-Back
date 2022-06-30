@@ -19,7 +19,16 @@ module.exports = {
             next(error)
         }
     },
-
+    getByDate: async (req, res, next) => {
+        const date = req.body.workDayStart
+        console.log(date);
+        try {
+            const assistance = await presentismServices.getByDate(date)
+            return res.status(200).json(assistance)
+        } catch (error) {
+            next(error)
+        }
+    },
     addAssistance: async (req, res, next) => {
         const data = req.body
         try {
