@@ -4,6 +4,7 @@ const presentismController = require("../controllers/presentism.controller")
 
 router.get("/", presentismController.getAll)
 router.get("/search/:employeeId", presentismController.getByUser)
+router.get("/date", presentismController.getByDate)
 router.post("/addAssistance",presentismController.addAssistance)
 router.delete("/:assistanceId", presentismController.deleteAssistance)
 router.put("/:assistanceId", presentismController.updatePresentism)
