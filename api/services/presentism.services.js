@@ -1,4 +1,5 @@
 const Presentism = require("../models/Presentism")
+const Users = require("../models/Users")
 
 module.exports = {
     getAll: async () => {
@@ -6,13 +7,25 @@ module.exports = {
             const allAssistances = await Presentism.findAll()
             return allAssistances
         } catch (error) {
-            throw new Error("Error getting presentism")
+            console.log(error)
         }
     },
     addAssistance: async (data) => {
+        const { userId, workDayStart } = data
         try {
-            const assistanceCreated = await Presentism.create(data)
-            return assistanceCreated
+            const user = await Users.findByPk(userId)
+            const newAssistance = await Presentism.create({ workDayStart })
+            return newAssistance.addUser(user)
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    getByUser: async (userId) => {
+        try {
+            const assistance = await Presentism.findAll({
+                where: { userId }
+            })
+            return assistance
         } catch (error) {
             console.log(error)
         }

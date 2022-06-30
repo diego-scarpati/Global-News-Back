@@ -23,7 +23,7 @@ module.exports = {
     },
 
     addLicense: async (req, res, next) => {
-        const data = req.body
+        const {...data} = req.body
         try {
             const licenseCreated = await licenseServices.addLicense(data)
             return res.status(201).json(licenseCreated)
@@ -36,7 +36,7 @@ module.exports = {
         const licenceId = req.params.licenseId
         try {
             await licenseServices.deleteLicence(licenceId)
-            return res.status(204).json("DELETED")
+            res.status(204).json("DELETED")
         } catch (error) {
             next(error)
         }
