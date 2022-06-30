@@ -24,5 +24,5 @@ Availability.hasMany(Users, { as: "users" });
 Users.belongsToMany(Presentism, { through: "users_presentism" });
 Presentism.belongsToMany(Users, { through: "users_presentism" });
 
-module.exports = { Users, WorkLicenses, Positions, Teams, Offices, Availability, Presentism };
+module.exports = { Users, Worklicenses, Positions, Teams, Offices, Availability, Presentism };
 
