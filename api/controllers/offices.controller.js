@@ -40,5 +40,35 @@ module.exports = {
         } catch (error) {
             next(error)
         }
+    },
+
+    getByCountry: async (req, res, next) => {
+        const country = req.params.country
+        try {
+            const offices = await officesServices.getByCountry(country)
+            res.status(200).send(offices)
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    getByCity: async (req, res, next) => {
+        const city = req.params.city
+        try {
+            const offices = await officesServices.getByCity(city)
+            res.status(200).send(offices)
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    search: async (req, res, next) => {
+        const search = req.params.search
+        console.log(search)
+        try {
+            const countries = await officesServices.search(search)
+        } catch (error) {
+            next(error)
+        }
     }
 }
