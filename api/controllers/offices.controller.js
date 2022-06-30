@@ -25,7 +25,7 @@ module.exports = {
         const officeId = req.params.officeId
         try {
             await officesServices.deleteOffice(officeId)
-            res.json("DELETED")
+            res.status(204).json("DELETED")
         } catch (error) {
             next(error)
         }
