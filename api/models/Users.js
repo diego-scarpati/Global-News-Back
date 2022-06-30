@@ -51,14 +51,14 @@ Users.init(
       type: sequelize.STRING,
     },
     birthday: {
-      type: sequelize.DATEONLY,
+      type: sequelize.DATE,
     },
     startDate: {
-      type: sequelize.DATEONLY,
+      type: sequelize.DATE,
       
     },
     endDate: {
-      type: sequelize.DATEONLY,
+      type: sequelize.DATE,
     },
     city: {
       type: sequelize.STRING,
@@ -81,6 +81,10 @@ Users.init(
     observations: {
       type: sequelize.TEXT,
     },
+    RRHH:{
+      type: sequelize.BOOLEAN,
+      defaultValue:false
+    }
   },
   { sequelize: db, modelName: "user" }
 );
