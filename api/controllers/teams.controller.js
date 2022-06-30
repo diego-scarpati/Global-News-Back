@@ -35,7 +35,7 @@ module.exports = {
         const teamId = req.params.teamId
         try {
             await teamServices.deleteTeam(teamId)
-            res.json("DELETED")
+            res.status(204).json("DELETED")
         } catch (error) {
             next(error)
         }

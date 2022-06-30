@@ -10,9 +10,20 @@ module.exports = {
             next(error)
         }
     },
-    addAssistance: async (req, res, next) => {
+    getByUser: async (req, res, next) => {
+        const userId = req.params.employeeId
         try {
-            const assistanceCreated = await presentismServices.addAssistance(req.body)
+            const assistance = await presentismServices.getByUser(userId)
+            return res.status(200).json(assistance)
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    addAssistance: async (req, res, next) => {
+        const data = req.body
+        try {
+            const assistanceCreated = await presentismServices.addAssistance(data)
             res.status(201).json(assistanceCreated)
         } catch (error) {
             next(error)
@@ -22,7 +33,7 @@ module.exports = {
         const assistanceId = req.params.assistanceId
         try {
             await presentismServices.deleteAssistance(assistanceId)
-            res.json("DELETED")
+            res.status(204).json("DELETED")
         } catch (error) {
             next(error)
         }
