@@ -23,7 +23,7 @@ module.exports = {
     },
 
     addLicense: async (req, res, next) => {
-        const data = req.body
+        const {...data} = req.body
         try {
             const licenseCreated = await licenseServices.addLicense(data)
             return res.status(201).json(licenseCreated)
