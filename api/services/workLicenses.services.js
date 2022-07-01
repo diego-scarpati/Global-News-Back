@@ -6,7 +6,6 @@ module.exports = {
     try {
       const allLicenses = await Worklicenses.findAll({
         include: { model: Users },
-        // order: [["pending", 'DESC']],
       });
       return allLicenses;
     } catch (error) {
@@ -16,7 +15,8 @@ module.exports = {
   getByUser: async (userId) => {
     try {
       const allLicenses = await Worklicenses.findAll({
-        where: { id: userId },
+        where: { userId },
+        order: [["createdAt", 'DESC']],
       });
       return allLicenses;
     } catch (error) {
