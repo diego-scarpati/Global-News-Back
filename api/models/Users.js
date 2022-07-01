@@ -60,9 +60,6 @@ Users.init(
     endDate: {
       type: sequelize.DATE,
     },
-    city: {
-      type: sequelize.STRING,
-    },
     countryOfResidence: {
       type: sequelize.STRING,
     },

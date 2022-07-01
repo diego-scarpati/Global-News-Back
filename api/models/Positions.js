@@ -10,7 +10,7 @@ Positions.init(
       defaultValue: "employee",
       validate: {
         isIn: {
-          args: [["manager", "chief", "coordinator", "employee"]],
+          args: [["Gerente", "Jefe", "Coordinador", "Empleado"]],
           msg: "Must be a valid type",
         },
       },
