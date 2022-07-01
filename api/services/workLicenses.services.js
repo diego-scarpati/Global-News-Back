@@ -6,7 +6,6 @@ module.exports = {
     try {
       const allLicenses = await Worklicenses.findAll({
         include: { model: Users },
-        // order: [["pending", 'DESC']],
       });
       return allLicenses;
     } catch (error) {
@@ -16,7 +15,7 @@ module.exports = {
   getByUser: async (userId) => {
     try {
       const allLicenses = await Worklicenses.findAll({
-        where: { id: userId },
+        where: { userId },
       });
       return allLicenses;
     } catch (error) {
@@ -30,6 +29,7 @@ module.exports = {
     const userId = info.user.id;
     try {
       const user = await Users.findByPk(userId);
+      console.log("UserByPk",user)
       const worklicenses = await Worklicenses.create(info.data);
       return worklicenses.setUser(user);
     } catch (error) {
@@ -48,14 +48,6 @@ module.exports = {
     }
   },
   updateLicense: async (licenseId, data) => {
-    console.log(
-      "🚀 ~ file: workLicenses.services.js ~ line 50 ~ updateLicense: ~ licenseId",
-      licenseId
-    );
-    console.log(
-      "🚀 ~ file: workLicenses.services.js ~ line 50 ~ updateLicense: ~ data",
-      data
-    );
     try {
       const updatedLicense = await Worklicenses.update(data, {
         where: { id: licenseId },
