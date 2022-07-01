@@ -1,15 +1,31 @@
 const User = require("../models/Users");
+
 const { Op } = require("sequelize");
 
+
+const Positions = require("../models/Positions")
+
 module.exports = {
-  getAll: async () => {
-    try {
-      const allUsers = await User.findAll({ order: [["id", "ASC"]] });
-      return allUsers;
-    } catch (error) {
-      throw new Error("Error getting users");
-    }
-  },
+    getAll: async () => {
+        try {
+            const allUsers = await User.findAll({order: [["id", "ASC"]]})
+            return allUsers
+        } catch (error) {
+            throw new Error("Error getting users")
+        }
+    },
+
+    register: async (userData) => {
+        try {
+            const position = await Positions.findOrCreate({where:{hierarchy:"Empleado"}})
+            console.log("position",position)
+            const userCreated = await User.create(userData);
+            return userCreated.setPosition(position[0]);
+        } catch (error) {
+            console.log(error)
+        }
+    },
+
 
   findByName: async (search) => {
     try {
