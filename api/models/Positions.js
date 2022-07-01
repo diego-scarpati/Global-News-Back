@@ -7,7 +7,8 @@ Positions.init(
   {
     hierarchy: {
       type: sequelize.STRING,
-      defaultValue: "employee",
+      defaultValue: "Empleado",
+      unique: true,
       validate: {
         isIn: {
           args: [["Gerente", "Jefe", "Coordinador", "Empleado"]],

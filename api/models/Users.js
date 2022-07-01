@@ -55,7 +55,6 @@ Users.init(
     },
     startDate: {
       type: sequelize.DATE,
-      
     },
     endDate: {
       type: sequelize.DATE,
