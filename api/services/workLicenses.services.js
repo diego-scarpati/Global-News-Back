@@ -16,7 +16,6 @@ module.exports = {
     try {
       const allLicenses = await Worklicenses.findAll({
         where: { userId },
-        order: [["createdAt", 'DESC']],
       });
       return allLicenses;
     } catch (error) {
@@ -30,6 +29,7 @@ module.exports = {
     const userId = info.user.id;
     try {
       const user = await Users.findByPk(userId);
+      console.log("UserByPk",user)
       const worklicenses = await Worklicenses.create(info.data);
       return worklicenses.setUser(user);
     } catch (error) {
