@@ -4,6 +4,7 @@ const usersController = require("../controllers/users.controller.js")
 
 router.get("/", usersController.getAll)
 router.get("/:email", usersController.findByEmail)
+router.get('/search/:input', usersController.findByName)
 router.get("/:id", usersController.getUser)
 router.put("/:id", usersController.updateUser)
 router.post("/register", usersController.register);
