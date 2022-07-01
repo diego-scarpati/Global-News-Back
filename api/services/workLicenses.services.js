@@ -25,11 +25,11 @@ module.exports = {
 
     addLicense: async (data) => {
         const { info } = data
-        const { type, startDate, endDate } = info.data
+        const { type, startDate, endDate, attachment, observations } = info.data
         const userId = info.user.id
         try {
             const user = await Users.findByPk(userId)
-            const worklicenses = await Worklicenses.create({type, startDate, endDate})
+            const worklicenses = await Worklicenses.create(info.data)
             return  worklicenses.setUser(user)
         } catch (error) {
             console.log(error)
