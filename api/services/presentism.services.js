@@ -23,7 +23,18 @@ module.exports = {
     getByUser: async (userId) => {
         try {
             const assistance = await Presentism.findAll({
-                where: { userId }
+                include: { model: Users },
+                where: { id: userId },
+            })
+            return assistance
+        } catch (error) {
+            console.log(error)
+        }
+    },
+    getByDate: async (date) => {
+        try {
+            const assistance = await Presentism.findAll({
+                where: { workDayStart: date}
             })
             return assistance
         } catch (error) {

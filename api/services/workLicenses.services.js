@@ -4,7 +4,9 @@ const Users = require("../models/Users")
 module.exports = {
     getAll: async () => {
         try {
-            const allLicenses = await Worklicenses.findAll()
+            const allLicenses = await Worklicenses.findAll({
+                include: {model: Users}
+            })
             return allLicenses
         } catch (error) {
             console.log(error)
@@ -23,11 +25,11 @@ module.exports = {
 
     addLicense: async (data) => {
         const { info } = data
-        const { type, startDate, endDate } = info.data
+        const { type, startDate, endDate, attachment, observations } = info.data
         const userId = info.user.id
         try {
             const user = await Users.findByPk(userId)
-            const worklicenses = await Worklicenses.create({type, startDate, endDate})
+            const worklicenses = await Worklicenses.create(info.data)
             return  worklicenses.setUser(user)
         } catch (error) {
             console.log(error)
