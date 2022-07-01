@@ -3,12 +3,12 @@ const router = express.Router()
 const licensesController = require("../controllers/workLicenses.controller")
 
 router.get("/", licensesController.getAll)
-router.get("/user/:userId", licensesController.getByUser)
-router.get("/type", licensesController.getByType)
 router.get("/date", licensesController.getBydate)
+router.get("/type", licensesController.getByType)
 router.get("/:licenseId", licensesController.getLicence)
 router.post("/addLicense", licensesController.addLicense)
-router.delete("/:licenseId", licensesController.deleteLicence)
+router.get("/user/:userId", licensesController.getByUser)
 router.put("/:licenseId", licensesController.updateLicense)
+router.delete("/:licenseId", licensesController.deleteLicence)
 
 module.exports = router

@@ -4,7 +4,9 @@ const Users = require("../models/Users")
 module.exports = {
     getAll: async () => {
         try {
-            const allLicenses = await Worklicenses.findAll()
+            const allLicenses = await Worklicenses.findAll({
+                include: {model: Users}
+            })
             return allLicenses
         } catch (error) {
             console.log(error)
