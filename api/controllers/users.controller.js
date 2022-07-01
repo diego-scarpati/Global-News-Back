@@ -10,6 +10,17 @@ module.exports = {
             next(error)
         }
     },
+    findByName: async (req,res,next) => {
+        const searchInput = req.params.input
+        console.log("🚀 ~ file: users.controller.js ~ line 15 ~ findByName: ~ searchInput", searchInput)
+        try {
+            const searchUser = await userServices.findByName(searchInput)
+            if (!searchUser) return res.status(404).json({ message: "User not found" })
+            return res.json(searchUser)
+        } catch (error) {
+            next(error)
+        }
+    },
 
     register: async (req, res, next) => {
         try {
