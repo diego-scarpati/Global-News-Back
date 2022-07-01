@@ -48,14 +48,6 @@ module.exports = {
     }
   },
   updateLicense: async (licenseId, data) => {
-    console.log(
-      "🚀 ~ file: workLicenses.services.js ~ line 50 ~ updateLicense: ~ licenseId",
-      licenseId
-    );
-    console.log(
-      "🚀 ~ file: workLicenses.services.js ~ line 50 ~ updateLicense: ~ data",
-      data
-    );
     try {
       const updatedLicense = await Worklicenses.update(data, {
         where: { id: licenseId },
