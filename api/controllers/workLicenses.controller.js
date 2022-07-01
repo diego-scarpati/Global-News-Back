@@ -43,8 +43,10 @@ module.exports = {
     },
 
     updateLicense: async (req, res, next) => {
-        const licenseId = req.params.licenseId
+        const licenseId = req.body.id
         const data = req.body
+        console.log("🚀 ~ file: workLicenses.controller.js ~ line 48 ~ updateLicense: ~ req.body", req.body)
+        
         try {
             const updatedLicense = await licenseServices.updateLicense(licenseId, data)
             return res.status(202).json(updatedLicense)
