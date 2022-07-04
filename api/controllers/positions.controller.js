@@ -12,6 +12,7 @@ module.exports = {
     },
 
     addPosition: async (req, res, next) => {
+        console.log(req)
         try {
             const positionCreated = await positionServices.addPosition(req.body)
             res.status(201).json(positionCreated)

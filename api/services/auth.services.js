@@ -10,7 +10,7 @@ const axios = require("axios");
 //   id_token: string;
 // }
 
-async function getGoogleOAuthTokens({
+async function getWebGoogleOAuthTokens({
   code,
 }){
   const url = "https://oauth2.googleapis.com/token";
@@ -20,6 +20,37 @@ async function getGoogleOAuthTokens({
     client_id: "558789760835-323i1n243blve75l9hg3r20fm1eh1cr0.apps.googleusercontent.com",
     client_secret: "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",
     redirect_uri: "http://localhost:3001/api/auth/login",
+    grant_type: "authorization_code",
+  };
+
+  try {
+    const res = await axios.post(
+      url,
+      qs.stringify(values),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    console.error(error.response.data.error);
+    console.log(error, "Failed to fetch Google Oauth Tokens");
+    throw new Error(error.message);
+  }
+}
+
+async function getIOSGoogleOAuthTokens({
+  code,
+}){
+  const url = "https://oauth2.googleapis.com/token";
+
+  const values = {
+    code,
+    client_id: "558789760835-q546aa7dgpcs0p04r3qaslgg7i94cueu.apps.googleusercontent.com",
+    client_secret: "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",
+    redirect_uri: "http://localhost:3001/api/auth/loginIOS",
     grant_type: "authorization_code",
   };
 
@@ -79,4 +110,4 @@ async function getGoogleUser({
 //   return UserModel.findOneAndUpdate(query, update, options);
 // }
 
-module.exports = {getGoogleUser, getGoogleOAuthTokens}
+module.exports = {getGoogleUser, getWebGoogleOAuthTokens, getIOSGoogleOAuthTokens}
