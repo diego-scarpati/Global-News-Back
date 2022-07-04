@@ -12,7 +12,6 @@ module.exports = {
     },
     findByName: async (req,res,next) => {
         const searchInput = req.params.input
-        console.log("🚀 ~ file: users.controller.js ~ line 15 ~ findByName: ~ searchInput", searchInput)
         try {
             const searchUser = await userServices.findByName(searchInput)
             if (!searchUser) return res.status(404).json({ message: "User not found" })
@@ -57,6 +56,17 @@ module.exports = {
         const data = req.body
         try {
             const updatedUser = await userServices.updateUser(userId, data)
+            res.status(202).json(updatedUser)
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    updateUserPosition: async (req, res, next) => {
+        const userId = req.body.userId
+        const position = req.body.position
+        try {
+            const updatedUser = await userServices.updateUserPosition(userId, position)
             res.status(202).json(updatedUser)
         } catch (error) {
             next(error)

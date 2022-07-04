@@ -1,14 +1,18 @@
 const User = require("../models/Users");
+const Positions = require("../models/Positions")
+
 
 const { Op } = require("sequelize");
 
 
-const Positions = require("../models/Positions")
 
 module.exports = {
     getAll: async () => {
         try {
-            const allUsers = await User.findAll({order: [["id", "ASC"]]})
+            const allUsers = await User.findAll(
+              {include: { model: Positions }},
+              // {order: [["id", "ASC"]]}
+              )
             return allUsers
         } catch (error) {
             throw new Error("Error getting users")
@@ -46,15 +50,6 @@ module.exports = {
     }
   },
 
-  register: async (userData) => {
-    try {
-      const userCreated = await User.create(userData);
-      return userCreated;
-    } catch (error) {
-      console.log(error);
-    }
-  },
-
   deleteUser: async (id) => {
     try {
       const userDeleted = await User.destroy({ where: { id } });
@@ -66,7 +61,7 @@ module.exports = {
 
   getUser: async (id) => {
     try {
-      const user = await User.findByPk(id);
+      const user = await User.findByPk(id,{include: { model: Positions }});
       return user;
     } catch (error) {
       console.log(error);
@@ -81,6 +76,16 @@ module.exports = {
         plain: true,
       });
       return updatedUser[1];
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  updateUserPosition: async (userId, position) => {
+    try {
+      const user = await User.findOne({where:{id:userId}})
+       const newPosition = await Positions.findOne({where:{hierarchy : position}})
+       return user.setPosition(newPosition.id);
     } catch (error) {
       console.log(error);
     }
