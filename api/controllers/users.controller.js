@@ -11,6 +11,16 @@ module.exports = {
             next(error)
         }
     },
+    findByInput: async (req,res,next) => {
+        const searchInput = req.params.input
+        try {
+            const searchUser = await userServices.findByInput(searchInput)
+            if (!searchUser) return res.status(404).json({ message: "User not found" })
+            return res.json(searchUser)
+        } catch (error) {
+            next(error)
+        }
+    },
 
     register: async (req, res, next) => {
         try {
@@ -22,17 +32,17 @@ module.exports = {
     },
 
     deleteUser: async (req, res, next) => {
-        const userId = req.params.employeeId
+        const userId = req.params.id
         try {
             await userServices.deleteUser(userId)
-            res.json("DELETED")
+            res.status(204).json("DELETED")
         } catch (error) {
             next(error)
         }
     },
 
     getUser: async (req, res, next) => {
-        const userId = req.params.employeeId
+        const userId = req.params.id
         try {
             const user = await userServices.getUser(userId)
             if (!user) return res.status(404).json({ message: "User not found" })
@@ -43,7 +53,7 @@ module.exports = {
     },
 
     updateUser: async (req, res, next) => {
-        const userId = req.params.employeeId
+        const userId = req.params.id
         const data = req.body
         try {
             const updatedUser = await userServices.updateUser(userId, data)
@@ -52,6 +62,27 @@ module.exports = {
             next(error)
         }
     },
+
+    updateUserPosition: async (req, res, next) => {
+        const userId = req.body.userId
+        const position = req.body.position
+        try {
+            const updatedUser = await userServices.updateUserPosition(userId, position)
+            res.status(202).json(updatedUser)
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    findByEmail: async (req, res, next) => {
+        const email = (req.params.email);
+        try {
+            const userByEmail = await userServices.findByEmail(email)
+            return res.send(userByEmail)
+        } catch (error) {
+            next(error)
+        }
+    }
 
 
 }

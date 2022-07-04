@@ -31,11 +31,11 @@ module.exports = {
         }
     },
 
-    deleteUser: async (req, res, next) => {
+    deleteTeam: async (req, res, next) => {
         const teamId = req.params.teamId
         try {
-            await teamServices.deleteUser(teamId)
-            res.json("DELETED")
+            await teamServices.deleteTeam(teamId)
+            res.status(204).json("DELETED")
         } catch (error) {
             next(error)
         }

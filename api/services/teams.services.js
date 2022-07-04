@@ -12,9 +12,7 @@ module.exports = {
 
     getTeam: async (teamId) => {
         try {
-            const team = await Teams.findOne({
-                where: { id: teamId }
-            })
+            const team = await Teams.findOne(teamId)
             return team
         } catch (error) {
             console.log(error)
@@ -30,7 +28,7 @@ module.exports = {
         }
     },
 
-    deleteUser: async (teamId) => {
+    deleteTeam: async (teamId) => {
         try {
             const teamDeleted = await Teams.destroy({
                 where: { id: teamId }

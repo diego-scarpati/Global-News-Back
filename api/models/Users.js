@@ -1,13 +1,13 @@
 const sequelize = require("sequelize");
 const db = require("../db");
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
 
 class Users extends sequelize.Model {
-  encryptPassword(password,salt){
-    return bcrypt.hash(password,salt)
-  }  
-  async comparePassword(password){
-    return bcrypt.compare(password,this.password)
+  encryptPassword(password, salt) {
+    return bcrypt.hash(password, salt);
+  }
+  async comparePassword(password) {
+    return bcrypt.compare(password, this.password);
   }
 }
 
@@ -15,32 +15,31 @@ Users.init(
   {
     employeeId: {
       type: sequelize.STRING,
-      // allowNull: false,
     },
-    name: {
+    firstName: {
       type: sequelize.STRING,
       allowNull: false,
-      // unique: true,
     },
     lastName: {
       type: sequelize.STRING,
       allowNull: false,
     },
-    email : {
+    email: {
       type: sequelize.STRING,
       allowNull: false,
       unique: true,
       validate: {
-        isEmail: true
-      }
+        isEmail: true,
+      },
+      unique: true,
     },
-    password : {
+    password: {
       type: sequelize.STRING,
       // allowNull: false,
     },
     nationalId: {
-      type: sequelize.BIGINT,
-      // allowNull: false,
+      type: sequelize.STRING,
+      allowNull: false,
       unique: true,
     },
     address: {
@@ -49,20 +48,19 @@ Users.init(
     phoneNumber: {
       type: sequelize.STRING,
     },
-    birhtday: {
+    birthday: {
       type: sequelize.DATE,
     },
     startDate: {
       type: sequelize.DATE,
-      // allowNull: false,
     },
     endDate: {
       type: sequelize.DATE,
     },
-    city: {
+    countryOfResidence: {
       type: sequelize.STRING,
     },
-    countryOfResidence: {
+    city: {
       type: sequelize.STRING,
     },
     shift: {
@@ -80,19 +78,23 @@ Users.init(
     token: {
       type: sequelize.TEXT,
     },
+    RRHH: {
+      type: sequelize.BOOLEAN,
+      defaultValue: false,
+    },
   },
   { sequelize: db, modelName: "user" }
 );
 
-Users.beforeCreate(async (user)=>{
-  if (!user.password) return
-  try{
-      const salt = await bcrypt.genSalt(10)
-      const passwordHash = await user.encryptPassword(user.password,salt)
-      user.password = passwordHash
-  }catch(e){
-      throw new Error("ERROR PASSWORD")
+Users.beforeCreate(async (user) => {
+  if (!user.password) return;
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const passwordHash = await user.encryptPassword(user.password, salt);
+    user.password = passwordHash;
+  } catch (e) {
+    throw new Error("ERROR PASSWORD");
   }
-})
+});
 
 module.exports = Users;
