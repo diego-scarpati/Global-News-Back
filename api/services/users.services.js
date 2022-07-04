@@ -34,7 +34,7 @@ module.exports = {
           [Op.or]: [
             { firstName: { [Op.substring]: `${search}` } },
             { lastName: { [Op.substring]: `${search}` } },
-            { nationalId: { [Op.eq]: `${search}` } },
+            { nationalId: { [Op.substring]: `${search}` } },
             { employeeId: { [Op.substring]: `${search}` } },
             { email: { [Op.substring]: `${search}` } },
           ],
