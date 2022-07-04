@@ -71,7 +71,6 @@ module.exports = {
   },
 
   getLicenceByInput: async (input) => {
-    console.log(input)
     try {
       const user = await Users.findAll({
         where: {
@@ -83,8 +82,9 @@ module.exports = {
             { email: { [Op.substring]: `${input}` } },
           ],
         },
+        
       });
-      const licensesUsers = await Worklicenses.findAll({where:{userId : user[0].id}})
+      const licensesUsers = await Worklicenses.findAll({where:{userId : user[0].id},include: { model: Users }})
       return licensesUsers
     } catch (error) {
       console.log(error);

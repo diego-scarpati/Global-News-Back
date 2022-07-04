@@ -1,7 +1,5 @@
 const User = require("../models/Users");
 const Positions = require("../models/Positions")
-
-
 const { Op } = require("sequelize");
 
 
@@ -30,7 +28,7 @@ module.exports = {
     },
 
 
-  findByName: async (search) => {
+    findByInput: async (search) => {
     try {
       const searchUser = await User.findAll({
         where: {
@@ -41,7 +39,7 @@ module.exports = {
             { employeeId: { [Op.substring]: `${search}` } },
             { email: { [Op.substring]: `${search}` } },
           ],
-        },
+        }
       });
       return searchUser;
     } catch (error) {
