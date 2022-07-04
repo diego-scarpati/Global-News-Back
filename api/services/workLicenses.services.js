@@ -1,11 +1,12 @@
 const Worklicenses = require("../models/WorkLicenses");
 const Users = require("../models/Users");
+const { Op } = require("sequelize")
 
 module.exports = {
   getAll: async () => {
     try {
       const allLicenses = await Worklicenses.findAll({
-        include: { model: Users },
+        include: { model: Users }
       });
       return allLicenses;
     } catch (error) {
@@ -64,6 +65,27 @@ module.exports = {
     try {
       const license = await Worklicenses.findByPk(licenseId);
       return license;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getLicenceByInput: async (input) => {
+    try {
+      const user = await Users.findAll({
+        where: {
+          [Op.or]: [
+            { firstName: { [Op.substring]: `${input}` } },
+            { lastName: { [Op.substring]: `${input}` } },
+            { nationalId: { [Op.substring]: `${input}` } },
+            { employeeId: { [Op.substring]: `${input}` } },
+            { email: { [Op.substring]: `${input}` } },
+          ],
+        },
+        
+      });
+      const licensesUsers = await Worklicenses.findAll({where:{userId : user[0].id},include: { model: Users }})
+      return licensesUsers
     } catch (error) {
       console.log(error);
     }

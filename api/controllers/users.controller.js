@@ -10,10 +10,10 @@ module.exports = {
             next(error)
         }
     },
-    findByName: async (req,res,next) => {
+    findByInput: async (req,res,next) => {
         const searchInput = req.params.input
         try {
-            const searchUser = await userServices.findByName(searchInput)
+            const searchUser = await userServices.findByInput(searchInput)
             if (!searchUser) return res.status(404).json({ message: "User not found" })
             return res.json(searchUser)
         } catch (error) {
