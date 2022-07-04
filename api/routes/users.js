@@ -3,11 +3,12 @@ const router = express.Router()
 const usersController = require("../controllers/users.controller.js")
 
 router.get("/", usersController.getAll)
-router.get("/:email", usersController.findByEmail)
+router.get("/email/:email", usersController.findByEmail)
 router.get('/search/:input', usersController.findByName)
 router.get("/:id", usersController.getUser)
+router.put("/updatePosition", usersController.updateUserPosition)
 router.put("/:id", usersController.updateUser)
-router.post("/register", usersController.register);
+router.post("/register", usersController.register)
 router.delete("/:id", usersController.deleteUser)
 
 module.exports = router;
