@@ -65,6 +65,16 @@ module.exports = {
         }
     },
 
+    getLicenceByInput: async (req, res, next) => {
+        const input = req.params.input
+        try {
+            const license = await licenseServices.getLicenceByInput(input)
+            return res.status(200).json(license)
+        } catch (error) {
+            next(error)
+        }
+    },
+
     getByType: async (req, res, next) => {
         const type = req.body.type
         try {

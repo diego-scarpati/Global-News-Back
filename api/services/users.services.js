@@ -22,7 +22,6 @@ module.exports = {
     register: async (userData) => {
         try {
             const position = await Positions.findOrCreate({where:{hierarchy:"Empleado"}})
-            console.log("position",position)
             const userCreated = await User.create(userData);
             return userCreated.setPosition(position[0]);
         } catch (error) {
