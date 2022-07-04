@@ -40,7 +40,7 @@ Users.init(
       allowNull: false,
     },
     nationalId: {
-      type: sequelize.BIGINT,
+      type: sequelize.STRING,
       allowNull: false,
       unique: true,
     },
