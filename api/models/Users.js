@@ -15,12 +15,12 @@ Users.init(
   {
     employeeId: {
       type: sequelize.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
     name: {
       type: sequelize.STRING,
       allowNull: false,
-      unique: true,
+      // unique: true,
     },
     lastName: {
       type: sequelize.STRING,
@@ -29,17 +29,18 @@ Users.init(
     email : {
       type: sequelize.STRING,
       allowNull: false,
+      unique: true,
       validate: {
         isEmail: true
       }
     },
     password : {
       type: sequelize.STRING,
-      allowNull: false,
+      // allowNull: false,
     },
     nationalId: {
       type: sequelize.BIGINT,
-      allowNull: false,
+      // allowNull: false,
       unique: true,
     },
     address: {
@@ -53,7 +54,7 @@ Users.init(
     },
     startDate: {
       type: sequelize.DATE,
-      allowNull: false,
+      // allowNull: false,
     },
     endDate: {
       type: sequelize.DATE,
@@ -74,6 +75,9 @@ Users.init(
       type: sequelize.STRING,
     },
     observations: {
+      type: sequelize.TEXT,
+    },
+    token: {
       type: sequelize.TEXT,
     },
   },
