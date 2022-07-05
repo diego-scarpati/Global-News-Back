@@ -1,21 +1,21 @@
 const sequelize = require("sequelize");
 const db = require("../db");
 
-class Presentism extends sequelize.Model {}
+class Attendance extends sequelize.Model {}
 
-Presentism.init(
+Attendance.init(
   {
     workDayStart: {
-      type: sequelize.DATE,
+      type: sequelize.STRING,
       allowNull: false,
     },
     workDayEnd: {
-      type: sequelize.DATE,
+      type: sequelize.STRING,
     },
   },
-  { sequelize: db, modelName: "presentism" }
+  { sequelize: db, modelName: "attendance" }
 );
 
-module.exports = Presentism;
+module.exports = Attendance;
 
 // Agregar los virtuals para desgranar lo que es dia de entrada y salida
