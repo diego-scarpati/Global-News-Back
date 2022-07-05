@@ -1,9 +1,10 @@
 const Teams = require("../models/Teams")
+const Users = require("../models/Users")
 
 module.exports = {
     getAll: async () => {
         try {
-            const allTeams = await Teams.findAll()
+            const allTeams = await Teams.findAll({include: {model: Users}})
             return allTeams
         } catch (error) {
             throw new Error("Error getting teams")
@@ -50,5 +51,16 @@ module.exports = {
         } catch (error) {
             console.log(error)
         }
-    }
+    },
+
+    userAddTeam: async (data) => {
+        const {id, name} = data
+        try {
+            const user = await Users.findByPk(id)
+            const teams = await Teams.findOne({where: {name}})
+            return user.setTeams(teams)
+        } catch (error) {
+            console.log(error)
+        }
+    },
 }
