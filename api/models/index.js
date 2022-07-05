@@ -4,13 +4,13 @@ const Positions = require("./Positions");
 const Teams = require("./Teams");
 const Offices = require("./Offices");
 const Availability = require("./Availability")
-const Presentism = require("./Presentism")
+const Attendance = require("./Attendance")
 
 Users.belongsToMany(Teams, { through: "users_teams" });
 Teams.belongsToMany(Users, { through: "users_teams" });
 
-Users.belongsToMany(Presentism, { through: "users_presentism" });
-Presentism.belongsToMany(Users, { through: "users_presentism" });
+Attendance.belongsTo(Users);
+Users.hasMany(Attendance);
 
 Users.belongsTo(Offices);
 Offices.hasMany(Users);
@@ -25,5 +25,5 @@ Users.belongsTo(Availability);
 Availability.hasMany(Users);
 
 
-module.exports = { Users, Worklicenses, Positions, Teams, Offices, Availability, Presentism };
+module.exports = { Users, Worklicenses, Positions, Teams, Offices, Availability, Attendance };
 
