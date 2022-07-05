@@ -1,5 +1,7 @@
 const User = require("../models/Users");
 const Positions = require("../models/Positions");
+const Attendance = require("../models/Attendance");
+const Availability = require("../models/Availability");
 const { Op } = require("sequelize");
 
 module.exports = {
@@ -20,7 +22,9 @@ module.exports = {
       const position = await Positions.findOrCreate({
         where: { hierarchy: "Empleado" },
       });
+      const availability = await Availability.findByPk(2);
       const userCreated = await User.create(userData);
+      userCreated.setAvailability(availability);
       return userCreated.setPosition(position[0]);
     } catch (error) {
       console.log(error);

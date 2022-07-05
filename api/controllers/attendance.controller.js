@@ -11,7 +11,7 @@ module.exports = {
         }
     },
     getByUser: async (req, res, next) => {
-        const userId = req.params.employeeId
+        const userId = req.params.id
         try {
             const assistance = await attendanceServices.getByUser(userId)
             return res.status(200).json(assistance)

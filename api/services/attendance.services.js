@@ -40,8 +40,8 @@ module.exports = {
     getByUser: async (userId) => {
         try {
             const assistance = await Attendance.findAll({
+                where: { userId },
                 include: { model: Users },
-                where: { id: userId },
             })
             return assistance
         } catch (error) {
