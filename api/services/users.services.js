@@ -1,6 +1,7 @@
 const User = require("../models/Users");
 const Positions = require("../models/Positions");
 const Attendance = require("../models/Attendance");
+const Teams = require("../models/Teams")
 const Availability = require("../models/Availability");
 const { Op } = require("sequelize");
 
@@ -42,7 +43,7 @@ module.exports = {
             { employeeId: { [Op.substring]: `${search}` } },
             { email: { [Op.substring]: `${search}` } },
           ],
-        },
+        }, include: { model: Teams } 
       });
       return searchUser;
     } catch (error) {
