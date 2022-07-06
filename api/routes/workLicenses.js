@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 const licensesController = require("../controllers/workLicenses.controller")
 
-router.get("/", licensesController.getAll)
+router.get("/:id", licensesController.getAll)
 router.get("/date", licensesController.getBydate)
 router.get("/type", licensesController.getByType)
 router.get("/:licenseId", licensesController.getLicence)

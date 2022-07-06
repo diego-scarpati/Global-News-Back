@@ -2,8 +2,9 @@ const licenseServices = require("../services/workLicenses.services")
 
 module.exports = {
     getAll: async (req, res, next) => {
+        const id = req.params.id
         try {
-            const allLicences = await licenseServices.getAll()
+            const allLicences = await licenseServices.getAll(id)
             if (!allLicences) return res.status(404).json({ message: "Licence not found" })
             return res.status(200).json(allLicences)
         } catch (error) {
@@ -45,8 +46,6 @@ module.exports = {
     updateLicense: async (req, res, next) => {
         const licenseId = req.body.id
         const data = req.body
-        console.log("🚀 ~ file: workLicenses.controller.js ~ line 48 ~ updateLicense: ~ req.body", req.body)
-        
         try {
             const updatedLicense = await licenseServices.updateLicense(licenseId, data)
             return res.status(202).json(updatedLicense)
