@@ -34,8 +34,9 @@ module.exports = {
     },
 
     addTeam: async (req, res, next) => {
+        const name = req.body
         try {
-            const teamCreated = await teamServices.addTeam(req.body)
+            const teamCreated = await teamServices.addTeam(name)
             res.status(201).json(teamCreated)
         } catch (error) {
             next(error)

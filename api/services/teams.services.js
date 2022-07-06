@@ -29,9 +29,9 @@ module.exports = {
         }
     },
 
-    addTeam: async (data) => {
+    addTeam: async (name) => {
         try {
-            const teamCreated = await Teams.create(data)
+            const teamCreated = await Teams.create(name)
             return teamCreated
         } catch (error) {
             console.log(error)
@@ -67,7 +67,7 @@ module.exports = {
         try {
             const user = await Users.findByPk(id)
             const teams = await Teams.findOne({where: {name}})
-            return user.setTeams(teams)
+            return user.addTeams(teams)
         } catch (error) {
             console.log(error)
         }
