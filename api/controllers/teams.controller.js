@@ -12,9 +12,9 @@ module.exports = {
     },
 
     getAllbyUser: async (req, res, next) => {
-        const userTeam = req.params.id
+        const userId = req.params.id
         try {
-            const teamsByUser = await teamServices.getAllbyUser(userTeam)
+            const teamsByUser = await teamServices.getAllbyUser(userId)
             if (!teamsByUser) return res.status(404).json({ message: "Team not found" })
             return res.json(teamsByUser)
         } catch (error) {
