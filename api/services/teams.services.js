@@ -13,7 +13,8 @@ module.exports = {
 
     getAllbyUser: async (userId) => {
         try {
-            const teamsByUser = await Teams.findAll({where: { id: userId }})
+            // const users = await Users.findAll()
+            const teamsByUser = await Teams.findAll({include:[{model: Users, where: { id: userId}, required:true}]})
             return teamsByUser
         } catch (error) {
             throw new Error("Error getting teams")
