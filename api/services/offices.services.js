@@ -1,4 +1,5 @@
 const Offices = require("../models/Offices")
+const Users = require("../models/Users")
 
 module.exports = {
     getAll: async () => {
@@ -71,5 +72,16 @@ module.exports = {
         } catch (error) {
             console.log(error)
         }
-    }
+    },
+
+    userAddOffice: async (data) => {
+        const {id, name} = data
+        try {
+            const user = await Users.findByPk(id)
+            const office = await Offices.findOne({where: {name}})
+            return office.addUsers(user)
+        } catch (error) {
+            console.log(error)
+        }
+    },
 }

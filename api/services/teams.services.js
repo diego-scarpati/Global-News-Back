@@ -21,9 +21,10 @@ module.exports = {
         }
     },
 
-    getTeam: async (teamId) => {
+    getTeam: async (id) => {
         try {
-            const team = await Teams.findOne(teamId)
+            const team = await Teams.findByPk(id,{include: { model: Users }})
+            console.log(team)
             return team
         } catch (error) {
             console.log(error)
