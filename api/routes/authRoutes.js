@@ -3,10 +3,14 @@ const express = require("express");
 const authRoutes = express();
 // const { google } = require("googleapis");
 // const url = require("url");
-const { googleOauthHandler } = require("../controllers/auth.controller");
+const GoogleController = require("../controllers/auth.controller");
 // authRoutes.use(cookieParser());
 
-authRoutes.get("/login", googleOauthHandler);
+authRoutes.get("/login", GoogleController.googleOauthHandler);
+
+authRoutes.get("/loginIOS", GoogleController.googleIOSOauthHandler);
+
+authRoutes.get("/logged", GoogleController.getMe)
 
 // authRoutes.get("/profile", checkAuthenticated, (req, res) => {
 //   let user = req.user;

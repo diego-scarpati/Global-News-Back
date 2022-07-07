@@ -12,6 +12,7 @@ module.exports = {
     },
 
     addPosition: async (req, res, next) => {
+        console.log(req)
         try {
             const positionCreated = await positionServices.addPosition(req.body)
             res.status(201).json(positionCreated)
@@ -32,10 +33,10 @@ module.exports = {
 
     updatePosition: async (req, res, next) => {
         const positionId = req.params.positionId
-        const data = req.body
+        const data = req.body 
         try {
-            const positionUpdated = await positionServices.updatePosition(positionId, data)
-            res.status(202).json(positionUpdated)
+             const positionUpdated = await positionServices.updatePosition(positionId, data)
+            res.status(202).json(positionUpdated) 
         } catch (error) {
             next(error)
         }

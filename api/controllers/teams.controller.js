@@ -11,6 +11,17 @@ module.exports = {
         }
     },
 
+    getAllbyUser: async (req, res, next) => {
+        const userTeam = req.params.id
+        try {
+            const teamsByUser = await teamServices.getAllbyUser(userTeam)
+            if (!teamsByUser) return res.status(404).json({ message: "Team not found" })
+            return res.json(teamsByUser)
+        } catch (error) {
+            next(error)
+        }
+    },
+
     getTeam: async (req, res, next) => {
         const teamId = req.params.teamId
         try {
@@ -23,8 +34,9 @@ module.exports = {
     },
 
     addTeam: async (req, res, next) => {
+        const name = req.body
         try {
-            const teamCreated = await teamServices.addTeam(req.body)
+            const teamCreated = await teamServices.addTeam(name)
             res.status(201).json(teamCreated)
         } catch (error) {
             next(error)
@@ -51,5 +63,17 @@ module.exports = {
             next(error)
         }
 
-    }
+    },
+
+    userAddTeam: async (req, res, next) => {
+        const data = req.body
+        try {
+            console.log(data)
+            const teamCreated = await teamServices.userAddTeam(data)
+            res.status(201).json(teamCreated)
+        } catch (error) {
+            next(error)
+        }
+    },
+
 }

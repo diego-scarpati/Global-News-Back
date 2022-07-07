@@ -1,11 +1,23 @@
 const userServices = require("../services/users.services");
 
+
 module.exports = {
     getAll: async (req, res, next) => {
+        console.log(req)
         try {
             const allUsers = await userServices.getAll()
             if (!allUsers) return res.status(404).json({ message: "Users not found" })
             return res.json(allUsers)
+        } catch (error) {
+            next(error)
+        }
+    },
+    findByInput: async (req,res,next) => {
+        const searchInput = req.params.input
+        try {
+            const searchUser = await userServices.findByInput(searchInput)
+            if (!searchUser) return res.status(404).json({ message: "User not found" })
+            return res.json(searchUser)
         } catch (error) {
             next(error)
         }
@@ -46,6 +58,17 @@ module.exports = {
         const data = req.body
         try {
             const updatedUser = await userServices.updateUser(userId, data)
+            res.status(202).json(updatedUser)
+        } catch (error) {
+            next(error)
+        }
+    },
+
+    updateUserPosition: async (req, res, next) => {
+        const userId = req.body.userId
+        const position = req.body.position
+        try {
+            const updatedUser = await userServices.updateUserPosition(userId, position)
             res.status(202).json(updatedUser)
         } catch (error) {
             next(error)
