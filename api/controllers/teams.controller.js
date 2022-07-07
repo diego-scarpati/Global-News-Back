@@ -23,9 +23,9 @@ module.exports = {
     },
 
     getTeam: async (req, res, next) => {
-        const teamId = req.params.teamId
+        const id = req.params.id
         try {
-            const team = await teamServices.getTeam(teamId)
+            const team = await teamServices.getTeam(id)
             if (!team) return res.status(404).json({ message: "Team not found" })
             return res.send(team)
         } catch (error) {
