@@ -1,5 +1,6 @@
 const userServices = require("../services/users.services");
 
+
 module.exports = {
     getAll: async (req, res, next) => {
         console.log(req)

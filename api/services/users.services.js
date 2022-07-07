@@ -1,34 +1,38 @@
 const User = require("../models/Users");
-const Positions = require("../models/Positions")
+const Positions = require("../models/Positions");
+const Attendance = require("../models/Attendance");
+const Teams = require("../models/Teams")
+const Availability = require("../models/Availability");
 const { Op } = require("sequelize");
 
-
-
 module.exports = {
-    getAll: async () => {
-        try {
-            const allUsers = await User.findAll(
-              {include: { model: Positions }},
-              // {order: [["id", "ASC"]]}
-              )
-            return allUsers
-        } catch (error) {
-            throw new Error("Error getting users")
-        }
-    },
+  getAll: async () => {
+    try {
+      const allUsers = await User.findAll(
+        { order: [["id", "ASC"]] },
+        { include: { model: Positions } }
+      );
+      return allUsers;
+    } catch (error) {
+      throw new Error("Error getting users");
+    }
+  },
 
-    register: async (userData) => {
-        try {
-            const position = await Positions.findOrCreate({where:{hierarchy:"Empleado"}})
-            const userCreated = await User.create(userData);
-            return userCreated.setPosition(position[0]);
-        } catch (error) {
-            console.log(error)
-        }
-    },
+  register: async (userData) => {
+    try {
+      const position = await Positions.findOrCreate({
+        where: { hierarchy: "Empleado" },
+      });
+      const availability = await Availability.findByPk(2);
+      const userCreated = await User.create(userData);
+      userCreated.setAvailability(availability);
+      return userCreated.setPosition(position[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
-
-    findByInput: async (search) => {
+  findByInput: async (search) => {
     try {
       const searchUser = await User.findAll({
         where: {
@@ -39,7 +43,7 @@ module.exports = {
             { employeeId: { [Op.substring]: `${search}` } },
             { email: { [Op.substring]: `${search}` } },
           ],
-        }
+        }, include: { model: Teams } 
       });
       return searchUser;
     } catch (error) {
@@ -58,7 +62,7 @@ module.exports = {
 
   getUser: async (id) => {
     try {
-      const user = await User.findByPk(id,{include: { model: Positions }});
+      const user = await User.findByPk(id, { include: { model: Positions } });
       return user;
     } catch (error) {
       console.log(error);
@@ -80,9 +84,11 @@ module.exports = {
 
   updateUserPosition: async (userId, position) => {
     try {
-      const user = await User.findOne({where:{id:userId}})
-       const newPosition = await Positions.findOne({where:{hierarchy : position}})
-       return user.setPosition(newPosition.id);
+      const user = await User.findOne({ where: { id: userId } });
+      const newPosition = await Positions.findOne({
+        where: { hierarchy: position },
+      });
+      return user.setPosition(newPosition.id);
     } catch (error) {
       console.log(error);
     }

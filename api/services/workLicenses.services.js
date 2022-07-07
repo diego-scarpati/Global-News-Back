@@ -1,12 +1,14 @@
 const Worklicenses = require("../models/WorkLicenses");
+const Positions = require("../models/Positions")
 const Users = require("../models/Users");
 const { Op } = require("sequelize")
 
 module.exports = {
-  getAll: async () => {
+  getAll: async (id) => {
     try {
       const allLicenses = await Worklicenses.findAll({
-        include: { model: Users }
+        include: { model: Users, where: { [Op.not]: [{ id }] }}
+
       });
       return allLicenses;
     } catch (error) {
