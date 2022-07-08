@@ -23,9 +23,9 @@ module.exports = {
     },
 
     getTeam: async (req, res, next) => {
-        const teamId = req.params.teamId
+        const id = req.params.id
         try {
-            const team = await teamServices.getTeam(teamId)
+            const team = await teamServices.getTeam(id)
             if (!team) return res.status(404).json({ message: "Team not found" })
             return res.send(team)
         } catch (error) {
@@ -68,7 +68,6 @@ module.exports = {
     userAddTeam: async (req, res, next) => {
         const data = req.body
         try {
-            console.log(data)
             const teamCreated = await teamServices.userAddTeam(data)
             res.status(201).json(teamCreated)
         } catch (error) {

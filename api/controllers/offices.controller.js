@@ -70,5 +70,15 @@ module.exports = {
         } catch (error) {
             next(error)
         }
-    }
+    },
+
+    userAddOffice: async (req, res, next) => {
+        const data = req.body
+        try {
+            const officeCreated = await officesServices.userAddOffice(data)
+            res.status(201).json(officeCreated)
+        } catch (error) {
+            next(error)
+        }
+    },
 }
