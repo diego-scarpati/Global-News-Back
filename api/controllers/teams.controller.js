@@ -56,7 +56,6 @@ module.exports = {
     userAddTeam: async (req, res, next) => {
         const data = req.body
         try {
-            console.log(data)
             const teamCreated = await teamServices.userAddTeam(data)
             res.status(201).json(teamCreated)
         } catch (error) {

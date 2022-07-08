@@ -3,7 +3,6 @@ const userServices = require("../services/users.services");
 
 module.exports = {
     getAll: async (req, res, next) => {
-        console.log(req)
         try {
             const allUsers = await userServices.getAll()
             if (!allUsers) return res.status(404).json({ message: "Users not found" })

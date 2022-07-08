@@ -30,7 +30,6 @@ module.exports = {
                 returning: true,
                 plain: true
             })
-            console.log(attendanceUpdated)
             return attendanceUpdated[1]
         } catch (error) {
             console.log(error)
