@@ -51,10 +51,13 @@ class GoogleController {
     try {
       // get the id and access token with the code
       const { id_token, access_token } = await getWebGoogleOAuthTokens({ code });
+      console.log("🚀 ~ file: auth.controller.js ~ line 54 ~ GoogleController ~ googleOauthHandler= ~ access_token", access_token)
+      console.log("🚀 ~ file: auth.controller.js ~ line 54 ~ GoogleController ~ googleOauthHandler= ~ id_token", id_token)
       // console.log({ id_token, access_token });
 
       // get user with tokens
       const googleUser = await getGoogleUser({ id_token, access_token });
+      console.log("🚀 ~ file: auth.controller.js ~ line 58 ~ GoogleController ~ googleOauthHandler= ~ googleUser", googleUser)
       //jwt.decode(id_token);
 
       // console.log({ googleUser });
@@ -72,7 +75,9 @@ class GoogleController {
           token: id_token,
         },
       });
-      // console.log(user)
+
+
+      console.log(user)
       // email = new SetEmail(user.email)
       // res.cookie("user", user.id)
 
@@ -110,7 +115,7 @@ class GoogleController {
       // } else {
       //   return res.redirect(`exp://192.168.0.180:19000/?id=${user.id}`)
       // }
-      return res.redirect(`http://localhost:19006/?id=${user.id}`);
+      return res.redirect("https://auth.expo.io/@diegoscarpati/globalNews");
     } catch (error) {
       console.log(error, "Failed to authorize Google user");
       return res.status(403).send("Acceso denegado");
@@ -155,7 +160,7 @@ class GoogleController {
         where: { email: googleUser.email },
         defaults: {
           email: googleUser.email,
-          name: googleUser.given_name,
+          firstName: googleUser.given_name,
           lastName: googleUser.family_name,
           token: id_token,
         },
