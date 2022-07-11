@@ -14,5 +14,3 @@ Availability.init(
 );
 
 module.exports = Availability;
-
-
