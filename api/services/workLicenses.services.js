@@ -32,7 +32,6 @@ module.exports = {
     const userId = info.user.id;
     try {
       const user = await Users.findByPk(userId);
-      console.log("UserByPk",user)
       const worklicenses = await Worklicenses.create(info.data);
       return worklicenses.setUser(user);
     } catch (error) {
