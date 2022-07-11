@@ -82,6 +82,9 @@ Users.init(
       type: sequelize.BOOLEAN,
       defaultValue: false,
     },
+    expoToken : {
+      type: sequelize.STRING,
+    }
   },
   { sequelize: db, modelName: "user" }
 );
