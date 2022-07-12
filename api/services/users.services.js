@@ -7,9 +7,9 @@ const Offices = require("../models/Offices")
 const { Op } = require("sequelize");
 
 module.exports = {
-  getAll: async () => {
+  getAll: async (countryOfResidence) => {
     try {
-      const allUsers = await User.findAll(
+      const allUsers = await User.findAll({where:{countryOfResidence}},
         { order: [["id", "ASC"]] },
         { include: { model: Positions } }
       );
@@ -33,10 +33,11 @@ module.exports = {
     }
   },
 
-  findByInput: async (search) => {
+  findByInput: async (search,countryOfResidence) => {
     try {
       const searchUser = await User.findAll({
         where: {
+          countryOfResidence,
           [Op.or]: [
             { firstName: { [Op.substring]: `${search}` } },
             { lastName: { [Op.substring]: `${search}` } },

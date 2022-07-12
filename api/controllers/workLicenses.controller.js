@@ -3,8 +3,9 @@ const licenseServices = require("../services/workLicenses.services");
 module.exports = {
     getAll: async (req, res, next) => {
         const id = req.params.id
+        const {countryOfResidence} = req.query
         try {
-            const allLicences = await licenseServices.getAll(id)
+            const allLicences = await licenseServices.getAll(id,countryOfResidence)
             if (!allLicences) return res.status(404).json({ message: "Licence not found" })
             return res.status(200).json(allLicences)
         } catch (error) {
