@@ -19,10 +19,20 @@ Users.init(
     firstName: {
       type: sequelize.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: [3, 30],
+        is: [/^[A-Za-z ]+$/g]
+      },
     },
     lastName: {
       type: sequelize.STRING,
       allowNull: false,
+      validate: {
+        notEmpty: true,
+        len: [3, 30],
+        is: [/^[A-Za-z ]+$/g]
+      },
     },
     email: {
       type: sequelize.STRING,
@@ -30,12 +40,12 @@ Users.init(
       unique: true,
       validate: {
         isEmail: true,
+        notEmpty:true
       },
-      unique: true,
     },
     password: {
       type: sequelize.STRING,
-      // allowNull: false,
+      allowNull: false,
     },
     nationalId: {
       type: sequelize.STRING,
@@ -59,9 +69,15 @@ Users.init(
     },
     countryOfResidence: {
       type: sequelize.STRING,
+      validate: {
+        is: [/^[A-Za-z ]+$/g]
+      },
     },
     city: {
       type: sequelize.STRING,
+      validate: {
+        is: [/^[A-Za-z ]+$/g]
+      },
     },
     shift: {
       type: sequelize.STRING,
