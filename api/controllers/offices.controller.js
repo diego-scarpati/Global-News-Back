@@ -64,7 +64,6 @@ module.exports = {
 
     search: async (req, res, next) => {
         const search = req.params.search
-        console.log(search)
         try {
             const countries = await officesServices.search(search)
         } catch (error) {

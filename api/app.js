@@ -1,9 +1,13 @@
 const express = require("express");
+if (process.env.NODE_ENV !== "production"){
+  require("dotenv").config()
+}
 const volleyball = require("volleyball");
 const cors = require("cors");
 const db = require("./db/index")
 const models = require("./models")
 const cookieParser = require("cookie-parser");
+const PORT = process.env.PORT || 3001
 
 
 const app = express();
@@ -18,7 +22,7 @@ app.use(express.json());
 app.use("/api", indexRouter);
 
 db.sync({ force: false }).then(() => {
-  app.listen(3001, () => {
-    console.log("servidor escuchando en el puerto 3001");
+  app.listen(PORT, () => {
+    console.log(`servidor escuchando en el puerto ${PORT}`);
   });
 });
