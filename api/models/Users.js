@@ -59,13 +59,13 @@ Users.init(
       type: sequelize.STRING,
     },
     birthday: {
-      type: sequelize.DATE,
+      type: sequelize.STRING,
     },
     startDate: {
-      type: sequelize.DATE,
+      type: sequelize.STRING,
     },
     endDate: {
-      type: sequelize.DATE,
+      type: sequelize.STRING,
     },
     countryOfResidence: {
       type: sequelize.STRING,
