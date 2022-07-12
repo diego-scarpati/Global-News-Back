@@ -11,6 +11,7 @@ const {
   // findAndUpdateUser,
   getWebGoogleOAuthTokens,
   getIOSGoogleOAuthTokens,
+  getExpoGoogleOAuthTokens,
   getGoogleUser,
   // validatePassword,
 } = require("../services/auth.services");
@@ -115,7 +116,7 @@ class GoogleController {
       // } else {
       //   return res.redirect(`exp://192.168.0.180:19000/?id=${user.id}`)
       // }
-      return res.redirect("https://auth.expo.io/@diegoscarpati/globalNews");
+      return res.redirect("http://localhost:19006/register");
     } catch (error) {
       console.log(error, "Failed to authorize Google user");
       return res.status(403).send("Acceso denegado");
@@ -168,7 +169,7 @@ class GoogleController {
       console.log("user", user.id)
       
       console.log("Llego hasta el final del controller");
-      const url = `exp://192.168.0.180:19000/`
+      const url = "exp://192.168.0.180:19000/--/register"
       let query = +`?user=${user.id}`
       return res.redirect(url);
     } catch (error) {

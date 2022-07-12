@@ -41,6 +41,37 @@ async function getWebGoogleOAuthTokens({
   }
 }
 
+async function getExpoGoogleOAuthTokens({
+  code,
+}){
+  const url = "https://oauth2.googleapis.com/token";
+
+  const values = {
+    code,
+    client_id: "558789760835-92o8trq1qdj0fufq0iq39lmta149dth6.apps.googleusercontent.com",
+    client_secret: "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",
+    redirect_uri: "http://localhost:3001/api/auth/login",
+    grant_type: "authorization_code",
+  };
+
+  try {
+    const res = await axios.post(
+      url,
+      qs.stringify(values),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+    return res.data;
+  } catch (error) {
+    console.error(error.response.data.error);
+    console.log(error, "Failed to fetch Google Oauth Tokens");
+    throw new Error(error.message);
+  }
+}
+
 async function getIOSGoogleOAuthTokens({
   code,
 }){
@@ -110,4 +141,4 @@ async function getGoogleUser({
 //   return UserModel.findOneAndUpdate(query, update, options);
 // }
 
-module.exports = {getGoogleUser, getWebGoogleOAuthTokens, getIOSGoogleOAuthTokens}
+module.exports = {getGoogleUser, getWebGoogleOAuthTokens, getIOSGoogleOAuthTokens, getExpoGoogleOAuthTokens}
