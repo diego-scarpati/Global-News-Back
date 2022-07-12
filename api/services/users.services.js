@@ -3,6 +3,7 @@ const Positions = require("../models/Positions");
 const Attendance = require("../models/Attendance");
 const Teams = require("../models/Teams")
 const Availability = require("../models/Availability");
+const Offices = require("../models/Offices")
 const { Op } = require("sequelize");
 
 module.exports = {
@@ -43,7 +44,8 @@ module.exports = {
             { employeeId: { [Op.substring]: `${search}` } },
             { email: { [Op.substring]: `${search}` } },
           ],
-        }, include: { model: Teams } 
+        }, include: { model: Teams },
+  
       });
       return searchUser;
     } catch (error) {
@@ -69,10 +71,10 @@ module.exports = {
     }
   },
 
-  updateUser: async (userId, data) => {
+  updateUser: async (id, data) => {
     try {
       const updatedUser = await User.update(data, {
-        where: { id: userId },
+        where: { id },
         returning: true,
         plain: true,
       });

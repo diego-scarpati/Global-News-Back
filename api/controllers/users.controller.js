@@ -53,10 +53,10 @@ module.exports = {
     },
 
     updateUser: async (req, res, next) => {
-        const userId = req.params.id
+        const id = req.params.id
         const data = req.body
         try {
-            const updatedUser = await userServices.updateUser(userId, data)
+            const updatedUser = await userServices.updateUser(id, data)
             res.status(202).json(updatedUser)
         } catch (error) {
             next(error)
