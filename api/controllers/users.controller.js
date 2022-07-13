@@ -28,7 +28,8 @@ module.exports = {
     register: async (req, res, next) => {
         try {
             const userCreated = await userServices.register(req.body)
-            res.status(201).json(userCreated);
+            if (!userCreated) return res.status(404).json({ message: "User has not been created" })
+            return res.status(201).json(userCreated);
         } catch (error) {
             next(error);
         }
@@ -81,6 +82,7 @@ module.exports = {
         const email = (req.params.email);
         try {
             const userByEmail = await userServices.findByEmail(email)
+            console.log("🚀 ~ file: users.controller.js ~ line 82 ~ findByEmail: ~ userByEmail", userByEmail)
             return res.send(userByEmail)
         } catch (error) {
             next(error)
