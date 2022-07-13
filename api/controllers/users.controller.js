@@ -3,8 +3,9 @@ const userServices = require("../services/users.services");
 
 module.exports = {
     getAll: async (req, res, next) => {
+        const {countryOfResidence} = req.query  
         try {
-            const allUsers = await userServices.getAll()
+            const allUsers = await userServices.getAll(countryOfResidence)
             if (!allUsers) return res.status(404).json({ message: "Users not found" })
             return res.json(allUsers)
         } catch (error) {
@@ -13,8 +14,10 @@ module.exports = {
     },
     findByInput: async (req,res,next) => {
         const searchInput = req.params.input
+        const {countryOfResidence} = req.query
+        
         try {
-            const searchUser = await userServices.findByInput(searchInput)
+            const searchUser = await userServices.findByInput(searchInput,countryOfResidence )
             if (!searchUser) return res.status(404).json({ message: "User not found" })
             return res.json(searchUser)
         } catch (error) {
@@ -54,10 +57,10 @@ module.exports = {
     },
 
     updateUser: async (req, res, next) => {
-        const userId = req.params.id
+        const id = req.params.id
         const data = req.body
         try {
-            const updatedUser = await userServices.updateUser(userId, data)
+            const updatedUser = await userServices.updateUser(id, data)
             res.status(202).json(updatedUser)
         } catch (error) {
             next(error)

@@ -3,12 +3,13 @@ const Positions = require("../models/Positions");
 const Attendance = require("../models/Attendance");
 const Teams = require("../models/Teams")
 const Availability = require("../models/Availability");
+const Offices = require("../models/Offices")
 const { Op } = require("sequelize");
 
 module.exports = {
-  getAll: async () => {
+  getAll: async (countryOfResidence) => {
     try {
-      const allUsers = await User.findAll(
+      const allUsers = await User.findAll({where:{countryOfResidence}},
         { order: [["id", "ASC"]] },
         { include: { model: Positions } }
       );
@@ -32,10 +33,11 @@ module.exports = {
     }
   },
 
-  findByInput: async (search) => {
+  findByInput: async (search,countryOfResidence) => {
     try {
       const searchUser = await User.findAll({
         where: {
+          countryOfResidence,
           [Op.or]: [
             { firstName: { [Op.substring]: `${search}` } },
             { lastName: { [Op.substring]: `${search}` } },
@@ -43,7 +45,8 @@ module.exports = {
             { employeeId: { [Op.substring]: `${search}` } },
             { email: { [Op.substring]: `${search}` } },
           ],
-        }, include: { model: Teams } 
+        }, include: { model: Teams },
+  
       });
       return searchUser;
     } catch (error) {
@@ -69,10 +72,10 @@ module.exports = {
     }
   },
 
-  updateUser: async (userId, data) => {
+  updateUser: async (id, data) => {
     try {
       const updatedUser = await User.update(data, {
-        where: { id: userId },
+        where: { id },
         returning: true,
         plain: true,
       });

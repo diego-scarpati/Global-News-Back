@@ -4,9 +4,10 @@ const Users = require("../models/Users");
 const { Op } = require("sequelize")
 
 module.exports = {
-  getAll: async (id) => {
+  getAll: async (id,countryOfResidence) => {
     try {
-      const allLicenses = await Worklicenses.findAll({
+      const allLicenses = await Worklicenses.findAll(
+        {
         include: { model: Users, where: { [Op.not]: [{ id }] }}
 
       });
