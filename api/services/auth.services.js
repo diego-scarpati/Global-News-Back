@@ -1,144 +1,33 @@
-const qs = require("qs");
-// const config = require("config");
-const axios = require("axios");
+const User = require("../models/Users");
+const Positions = require("../models/Positions");
+const Availability = require("../models/Availability");
 
-// interface GoogleTokensResult {
-//   access_token: string;
-//   expires_in: Number;
-//   refresh_token: string;
-//   scope: string;
-//   id_token: string;
-// }
+module.exports = {
+  register: async (userData) => {
+    console.log("🚀 ~ file: auth.services.js ~ line 7 ~ register: ~ userData", userData)
+    console.log("entro en el auth service de register")
+    try {
+      const position = await Positions.findOrCreate({
+        where: { hierarchy: "Empleado" },
+      });
+      const availability = await Availability.findByPk(2);
+      const userCreated = await User.create(userData);
+      userCreated.setAvailability(availability);
+      return userCreated.setPosition(position[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  },
 
-async function getWebGoogleOAuthTokens({
-  code,
-}){
-  const url = "https://oauth2.googleapis.com/token";
-
-  const values = {
-    code,
-    client_id: "558789760835-323i1n243blve75l9hg3r20fm1eh1cr0.apps.googleusercontent.com",
-    client_secret: "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",
-    redirect_uri: "http://localhost:3001/api/auth/login",
-    grant_type: "authorization_code",
-  };
-
-  try {
-    const res = await axios.post(
-      url,
-      qs.stringify(values),
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
-    return res.data;
-  } catch (error) {
-    console.error(error.response.data.error);
-    console.log(error, "Failed to fetch Google Oauth Tokens");
-    throw new Error(error.message);
-  }
-}
-
-async function getExpoGoogleOAuthTokens({
-  code,
-}){
-  const url = "https://oauth2.googleapis.com/token";
-
-  const values = {
-    code,
-    client_id: "558789760835-92o8trq1qdj0fufq0iq39lmta149dth6.apps.googleusercontent.com",
-    client_secret: "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",
-    redirect_uri: "http://localhost:3001/api/auth/login",
-    grant_type: "authorization_code",
-  };
-
-  try {
-    const res = await axios.post(
-      url,
-      qs.stringify(values),
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
-    return res.data;
-  } catch (error) {
-    console.error(error.response.data.error);
-    console.log(error, "Failed to fetch Google Oauth Tokens");
-    throw new Error(error.message);
-  }
-}
-
-async function getIOSGoogleOAuthTokens({
-  code,
-}){
-  const url = "https://oauth2.googleapis.com/token";
-
-  const values = {
-    code,
-    client_id: "558789760835-q546aa7dgpcs0p04r3qaslgg7i94cueu.apps.googleusercontent.com",
-    client_secret: "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",
-    redirect_uri: "http://localhost:3001/api/auth/loginIOS",
-    grant_type: "authorization_code",
-  };
-
-  try {
-    const res = await axios.post(
-      url,
-      qs.stringify(values),
-      {
-        headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }
-    );
-    return res.data;
-  } catch (error) {
-    console.error(error.response.data.error);
-    console.log(error, "Failed to fetch Google Oauth Tokens");
-    throw new Error(error.message);
-  }
-}
-
-// interface GoogleUserResult {
-//   id: string;
-//   email: string;
-//   verified_email: boolean;
-//   name: string;
-//   given_name: string;
-//   family_name: string;
-//   picture: string;
-//   locale: string;
-// }
-
-async function getGoogleUser({
-  id_token,
-  access_token,
-}){
-  try {
-    const res = await axios.get(
-      `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`,
-      {
-        headers: {
-          Authorization: `Bearer ${id_token}`,
-        },
-      }
-    );
-    return res.data;
-  } catch (error) {
-    console.log(error, "Error fetching Google user");
-  }
-}
-
-// export async function findAndUpdateUser(
-//   query: FilterQuery<UserDocument>,
-//   update: UpdateQuery<UserDocument>,
-//   options: QueryOptions = {}
-// ) {
-//   return UserModel.findOneAndUpdate(query, update, options);
-// }
-
-module.exports = {getGoogleUser, getWebGoogleOAuthTokens, getIOSGoogleOAuthTokens, getExpoGoogleOAuthTokens}
+  login: async (data) => {
+    console.log("🚀 ~ file: auth.services.js ~ line 23 ~ login: ~ data", data)
+    console.log("entro en el auth service de logIn")
+    const { email } = data;
+    const user = await User.findOne({
+      where: {
+        email,
+      },
+    });
+    return user;
+  },
+};
