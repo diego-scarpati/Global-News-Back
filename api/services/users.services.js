@@ -45,9 +45,32 @@ module.exports = {
             { employeeId: { [Op.substring]: `${search}` } },
             { email: { [Op.substring]: `${search}` } },
           ],
-        }, include: { model: Teams },
+        },include: { model: Teams }
   
       });
+      return searchUser;
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+  bossFindByInput: async (search, name) => {
+    try {
+      const searchUser = await User.findAll({
+        //{include:[{model: Users, where: { id: userId}, required:true}]}
+        where: {
+          [Op.or]: [
+            { firstName: { [Op.substring]: `${search}` } },
+            { lastName: { [Op.substring]: `${search}` } },
+            { nationalId: { [Op.substring]: `${search}` } },
+            { employeeId: { [Op.substring]: `${search}` } },
+            { email: { [Op.substring]: `${search}` } },
+          ]
+        } ,include:[{model: Teams, where: { name }, required:true}]
+  
+      },
+      
+      );
       return searchUser;
     } catch (error) {
       console.error(error);
@@ -99,9 +122,9 @@ module.exports = {
 
   findByEmail: async (email) => {
     try {
-      const userByEmail = await User.findOne({
-        where: { email },
-      });
+      const userByEmail = await User.findOne({where: {email},
+      include: { model: Teams }}
+      );
       return userByEmail;
     } catch (error) {
       console.error(error);

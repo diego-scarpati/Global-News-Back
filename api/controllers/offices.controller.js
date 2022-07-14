@@ -2,8 +2,9 @@ const officesServices = require("../services/offices.services")
 
 module.exports = {
     getAll: async (req, res, next) => {
+        const { country } = req.query
         try {
-            const allOffices = await officesServices.getAll()
+            const allOffices = await officesServices.getAll(country)
             if (!allOffices) return res.status(404).json({ message: "Office not found" })
             return res.json(allOffices)
         } catch (error) {

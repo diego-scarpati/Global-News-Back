@@ -1,21 +1,41 @@
 const Worklicenses = require("../models/WorkLicenses");
-const Positions = require("../models/Positions")
+const Positions = require("../models/Positions");
 const Users = require("../models/Users");
-const { Op } = require("sequelize")
+const Teams = require("../models/Teams");
+const { Op } = require("sequelize");
 
 module.exports = {
-  getAll: async (id,countryOfResidence) => {
+  getAll: async (id, countryOfResidence) => {
     try {
-      const allLicenses = await Worklicenses.findAll(
-        {
-        include: { model: Users, where: { [Op.not]: [{ id }] }}
-
+      const allLicenses = await Worklicenses.findAll({
+        include: [
+          { model: Users, where: { countryOfResidence, [Op.not]: [{ id }] } },
+        ],
       });
       return allLicenses;
     } catch (error) {
       console.log(error);
     }
   },
+
+  bossGetAll: async (id, name) => {
+    try {
+      const allLicenses = await Worklicenses.findAll({
+        include: [
+          {
+            model: Users,
+            where: { [Op.not]: [{ id }] },
+            include: { model: Teams, where: { name } },
+          },
+        ],
+      });
+
+      return allLicenses;
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
   getByUser: async (userId) => {
     try {
       const allLicenses = await Worklicenses.findAll({
@@ -72,7 +92,7 @@ module.exports = {
     }
   },
 
-  getLicenceByInput: async (input) => {
+  getLicenceByInput: async (input, countryOfResidence) => {
     try {
       const user = await Users.findAll({
         where: {
@@ -83,11 +103,14 @@ module.exports = {
             { employeeId: { [Op.substring]: `${input}` } },
             { email: { [Op.substring]: `${input}` } },
           ],
+          countryOfResidence,
         },
-        
       });
-      const licensesUsers = await Worklicenses.findAll({where:{userId : user[0].id},include: { model: Users }})
-      return licensesUsers
+      const licensesUsers = await Worklicenses.findAll({
+        where: { userId: user[0].id },
+        include: { model: Users },
+      });
+      return licensesUsers;
     } catch (error) {
       console.log(error);
     }
