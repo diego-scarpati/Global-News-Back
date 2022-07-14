@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const usersController = require("../controllers/users.controller.js");
-const verifyToken = require("../middleware/authJwt");
+
 
 
 router.get("/", usersController.getAll)
