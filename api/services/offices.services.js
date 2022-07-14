@@ -2,9 +2,9 @@ const Offices = require("../models/Offices")
 const Users = require("../models/Users")
 
 module.exports = {
-    getAll: async () => {
+    getAll: async (country) => {
         try {
-            const allOffices = await Offices.findAll()
+            const allOffices = await Offices.findAll({where:{country}})
             return allOffices
         } catch (error) {
             console.log(error)
