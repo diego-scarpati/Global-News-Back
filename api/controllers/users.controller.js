@@ -16,7 +16,6 @@ module.exports = {
   findByInput: async (req, res, next) => {
     const searchInput = req.params.input;
     const { countryOfResidence } = req.query;
-
     try {
       const searchUser = await userServices.findByInput(
         searchInput,
@@ -33,7 +32,6 @@ module.exports = {
   bossFindByInput: async (req, res, next) => {
     const searchInput = req.params.input;
     const {name} = req.query
-    console.log("🚀 ~ file: users.controller.js ~ line 36 ~ bossFindByInput: ~ name", name)
     try {
       const searchUser = await userServices.bossFindByInput(searchInput, name);
       if (!searchUser)
@@ -74,6 +72,7 @@ module.exports = {
     }
   },
 
+
   updateUser: async (req, res, next) => {
     const id = req.params.id;
     const data = req.body;
@@ -82,6 +81,8 @@ module.exports = {
       res.status(202).json(updatedUser);
     } catch (error) {
       next(error);
+
+
     }
   },
 
