@@ -3,7 +3,6 @@ const router = express.Router();
 const usersController = require("../controllers/users.controller.js");
 
 
-
 router.get("/", usersController.getAll)
 router.get("/email/:email", usersController.findByEmail)
 router.get('/search/:input', usersController.findByInput)
