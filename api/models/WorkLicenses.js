@@ -10,11 +10,11 @@ Worklicenses.init(
       allowNull: false,
     },
     startDate: {
-      type: sequelize.STRING,
+      type: sequelize.TEXT,
       allowNull: false,
     },
     endDate: {
-      type: sequelize.STRING,
+      type: sequelize.TEXT,
       allowNull: false,
     },
     bossApproval: {
