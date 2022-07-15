@@ -21,7 +21,7 @@ app.use(express.json());
 
 app.use("/api", indexRouter);
 
-db.sync({ force: false }).then(() => {
+db.sync({ force: false}).then(() => {
   app.listen(PORT, () => {
     console.log(`servidor escuchando en el puerto ${PORT}`);
   });
